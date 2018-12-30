@@ -17,37 +17,13 @@ licenses(["notice"])  # Apache 2.0
 
 package(default_visibility = ["//visibility:public"])
 
-load("@com_google_protobuf//:protobuf.bzl", "py_proto_library")
-
-METADATA_PROTO_SRCS = [
-    "anomalies.proto",
-    "path.proto",
-    "schema.proto",
-    "statistics.proto",
-]
-
-filegroup(
-    name = "metadata_v0_proto_srcs",
-    srcs = METADATA_PROTO_SRCS,
-)
-
-proto_library(
-    name = "metadata_v0_proto",
-    srcs = METADATA_PROTO_SRCS,
-)
-
-cc_proto_library(
-    name = "metadata_v0_proto_cc_pb2",
-    deps = [":metadata_v0_proto"],
-)
-
-py_proto_library(
-    name = "metadata_v0_proto_py_pb2",
-    srcs = METADATA_PROTO_SRCS,
-    srcs_version = "PY2AND3",
-)
-
-java_proto_library(
-    name = "metadata_v0_proto_java_pb2",
-    deps = [":metadata_v0_proto"],
+# run as bazel tensorflow_metadata/java/maven:release -- <new_version_name>
+sh_binary(
+    name = "release",
+    srcs = ["release.sh"],
+    data = [
+        "pom.xml",
+        "//tensorflow_metadata/proto/v0:metadata_v0_proto_java_pb2",
+        "//tensorflow_metadata/proto/v0:metadata_v0_proto_srcs",
+    ],
 )

@@ -1,0 +1,109 @@
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <name>TensorFlow Metadata protocol buffers.</name>
+  <description>Java API for TensorFlow Metadata protocol buffers.</description>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.kbsriram.tensorflow.metadata</groupId>
+  <artifactId>proto</artifactId>
+  <version>0.9.0</version>
+  <packaging>jar</packaging>
+
+  <url>https://github.com/tensorflow/metadata</url>
+  <inceptionYear>2018</inceptionYear>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <scm>
+    <url>https://github.com/tensorflow/metadata</url>
+    <connection>git@github.com:tensorflow/metadata.git</connection>
+    <developerConnection>scm:git:https://github.com/tensorflow/metadata.git</developerConnection>
+  </scm>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.google.protobuf</groupId>
+      <artifactId>protobuf-java</artifactId>
+      <version>3.6.0</version>
+    </dependency>
+  </dependencies>
+
+  <!-- Two profiles are used:
+       ossrh - deploys to ossrh/maven central
+       bintray - deploys to bintray/jcenter. -->
+  <profiles>
+    <profile>
+      <id>ossrh</id>
+      <distributionManagement>
+        <!-- Sonatype requirements from http://central.sonatype.org/pages/apache-maven.html -->
+        <snapshotRepository>
+          <id>ossrh</id>
+          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+          <id>ossrh</id>
+          <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+      </distributionManagement>
+    </profile>
+    <profile>
+      <id>bintray</id>
+      <distributionManagement>
+        <!-- https://blog.bintray.com/2015/09/17/publishing-your-maven-project-to-bintray/ -->
+        <repository>
+          <id>bintray</id>
+          <url>https://api.bintray.com/maven/kbsriram/tensorflow-test/kbsriram-tensorflow-metadata/;publish=0</url>
+        </repository>
+      </distributionManagement>
+    </profile>
+  </profiles>
+  <!-- http://central.sonatype.org/pages/requirements.html#developer-information -->
+  <developers>
+    <developer>
+      <name>TensorFlowers</name>
+      <organization>TensorFlow</organization>
+      <organizationUrl>http://www.tensorflow.org</organizationUrl>
+    </developer>
+  </developers>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.2.1</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- GPG signed components: http://central.sonatype.org/pages/apache-maven.html#gpg-signed-components -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>1.5</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
+
